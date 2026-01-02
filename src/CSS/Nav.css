@@ -1,0 +1,298 @@
+:root {
+  --primary: #e67e22;
+  --primary-dark: #d35400;
+  --secondary: #2c3e50;
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Header & Navbar */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 7%;
+  position: relative; 
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--secondary);
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.logo span {
+  color: var(--primary);
+}
+
+/* Desktop Navigation */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+/* Active Link Highlight */
+.nav-links a.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--secondary);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+/* Login Button Style */
+.btn-login {
+  background-color: var(--primary);
+  color: var(--text-light) !important;
+  padding: 8px 25px;
+  border-radius: 5px;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+.btn-login:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Dropdown Menu (Desktop) */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  list-style: none;
+  min-width: 200px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  padding: 10px 0;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.dropdown li a {
+  display: block;
+  padding: 10px 15px;
+  color: var(--secondary);
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.dropdown li a:hover {
+  background-color: #f0f0f0;
+  color: var(--primary);
+}
+
+/* Show dropdown on hover (Desktop only) */
+@media (min-width: 961px) {
+  .dropdown-parent:hover .dropdown {
+    display: block;
+  }
+}
+
+/* Mobile Menu Toggle Icon */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: var(--secondary);
+  cursor: pointer;
+  z-index: 1002;
+}
+
+/* -----------------------------
+   MOBILE FIX (FULL SCREEN MENU)
+   ----------------------------- */
+@media (max-width: 960px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed; 
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    padding: 20px;
+    gap: 30px;
+    transform: translateX(100%); 
+    transition: transform 0.3s ease-in-out;
+    z-index: 1001; 
+  }
+
+  .nav-links.active {
+    transform: translateX(0%);
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .nav-links a {
+    font-size: 1.2rem;
+  }
+
+  /* Mobile Dropdown Styling */
+  .dropdown {
+    position: static; 
+    display: none; 
+    box-shadow: none;
+    background: #f8f8f8;
+    width: 80%;
+    margin: 10px auto;
+    border-radius: 5px;
+  }
+
+  .dropdown li a {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .dropdown.show {
+    display: block;
+  }
+  
+  .btn-login {
+    display: inline-block;
+    width: auto;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hamburger Icon (3 bars) */
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  width: 30px;
+  height: 22px;
+  position: relative;
+}
+
+.menu-toggle span {
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: var(--secondary);
+  border-radius: 3px;
+  left: 0;
+  transition: var(--transition);
+}
+
+.menu-toggle span:nth-child(1) {
+  top: 0;
+}
+.menu-toggle span:nth-child(2) {
+  top: 9px;
+}
+.menu-toggle span:nth-child(3) {
+  top: 18px;
+}
+
+/* Active state → Cross icon */
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 9px;
+}
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 9px;
+}
+
+/* -----------------------------
+   MOBILE VIEW
+   ----------------------------- */
+@media (max-width: 960px) {
+  .menu-toggle {
+    display: block;
+    z-index: 1002;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    gap: 30px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1001;
+  }
+
+  .nav-links.active {
+    transform: translateX(0%);
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links a {
+    font-size: 1.2rem;
+  }
+}
+/* Mobile Dropdown Styling */

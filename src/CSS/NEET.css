@@ -1,0 +1,366 @@
+/* --- COLOR PALETTE (Bio-Medical) --- */
+:root {
+  --med-bg: #064e3b;       /* Dark Emerald */
+  --med-card: #022c22;     /* Deep Green */
+  --med-accent: #34d399;   /* Emerald Green Light */
+  --med-secondary: #0ea5e9;/* Sky Blue */
+  --med-text: #ecfdf5;     /* Mint White */
+  --med-text-muted: #9ca3af;
+  --gradient-med: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.neet-wrapper {
+  background-color: #f0fdf4; /* Very light mint background */
+  min-height: 100vh;
+  padding-bottom: 80px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* --- 1. TICKER --- */
+.neet-ticker {
+  background: var(--med-card);
+  color: white;
+  font-size: 0.85rem;
+  padding: 8px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-content {
+  display: inline-block;
+  padding-left: 100%;
+  animation: ticker 25s linear infinite;
+}
+@keyframes ticker {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* --- 2. HERO SECTION --- */
+.neet-hero-modern {
+  background: radial-gradient(circle at top right, #064e3b 0%, #022c22 100%);
+  color: white;
+  padding: 80px 5% 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Particles/Bg Effect (Organic Shapes) */
+.neet-hero-modern::before {
+  content: '';
+  position: absolute;
+  top: -30%; right: -10%;
+  width: 500px; height: 500px;
+  background: var(--med-accent);
+  filter: blur(120px);
+  opacity: 0.15;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; /* Organic shape */
+  animation: morph 8s infinite;
+}
+
+@keyframes morph {
+  0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+  50% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  gap: 50px;
+  position: relative;
+  z-index: 2;
+}
+
+.pill-badge {
+  background: rgba(52, 211, 153, 0.2);
+  color: var(--med-accent);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.hero-text-area h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.gradient-text {
+  background: var(--gradient-med);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-text-area p {
+  font-size: 1.1rem;
+  color: var(--med-text-muted);
+  margin-bottom: 30px;
+  max-width: 500px;
+}
+
+.hero-btns { display: flex; gap: 15px; margin-bottom: 40px; }
+
+.btn-primary-glow {
+  background: var(--gradient-med);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+  transition: 0.3s;
+}
+.btn-primary-glow:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
+
+.btn-secondary-glass {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+.btn-secondary-glass:hover { background: rgba(255, 255, 255, 0.2); }
+
+.trust-badges {
+  display: flex;
+  gap: 30px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 20px;
+  font-size: 0.9rem;
+  color: var(--med-text-muted);
+}
+.trust-badges i { color: var(--med-accent); margin-right: 8px; }
+
+/* Visuals (Floating Cards) */
+.hero-visual-area { position: relative; height: 400px; }
+
+.floating-card {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  padding: 20px;
+  border-radius: 20px;
+  border: var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  color: white;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-card i { font-size: 2.5rem; margin-bottom: 10px; }
+.c1 { top: 20%; left: 10%; border-color: #34d399; animation-delay: 0s; }
+.c1 i { color: #34d399; }
+.c2 { top: 50%; right: 10%; border-color: #0ea5e9; animation-delay: 2s; }
+.c2 i { color: #0ea5e9; }
+.c3 { bottom: 10%; left: 30%; border-color: #a78bfa; animation-delay: 4s; }
+.c3 i { color: #a78bfa; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* --- 3. TOPPERS STRIP --- */
+.toppers-strip {
+  background: white;
+  padding: 40px 5%;
+  margin-top: -50px; /* Overlap hero */
+  position: relative;
+  z-index: 5;
+  border-radius: 20px 20px 0 0;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
+}
+.toppers-strip h2 { text-align: center; margin-bottom: 30px; color: var(--med-card); }
+
+.toppers-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+.topper-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #f0fdf4;
+  padding: 10px 20px;
+  border-radius: 50px;
+  transition: 0.3s;
+  border: 1px solid #dcfce7;
+}
+.topper-card:hover { transform: scale(1.05); background: #dcfce7; }
+.topper-card img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--med-accent); }
+.topper-card h4 { margin: 0; font-size: 1rem; color: var(--med-card); }
+.topper-card .rank { color: var(--med-secondary); font-weight: 800; display: block; font-size: 0.9rem; }
+
+/* --- 4. MAIN CONTENT --- */
+.content-container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+
+/* Controls */
+.controls-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.search-glass {
+  background: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #e5e7eb;
+}
+.search-glass input { border: none; outline: none; margin-left: 10px; width: 100%; background: transparent; }
+
+.filter-pills { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+.filter-pills button {
+  background: white;
+  border: 1px solid #d1d5db;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: #4b5563;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.filter-pills button.active, .filter-pills button:hover {
+  background: var(--med-bg);
+  color: white;
+  border-color: var(--med-bg);
+}
+
+/* --- 5. TECH CARDS (Reused structure with Med Colors) --- */
+.neet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.tech-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: 0.4s;
+  position: relative;
+  border: 1px solid #e5e7eb;
+}
+.tech-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+/* Badge */
+.card-badge {
+  position: absolute;
+  top: 15px; right: 15px;
+  background: var(--med-secondary);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.card-badge.urgent { background: #ef4444; animation: pulse 2s infinite; }
+
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+
+.tech-card-img { height: 180px; position: relative; overflow: hidden; }
+.tech-card-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+.tech-card:hover .tech-card-img img { transform: scale(1.1); filter: grayscale(20%); }
+
+.img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 44, 34, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s;
+}
+.tech-card:hover .img-overlay { opacity: 1; }
+.img-overlay button {
+  background: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--med-card);
+}
+
+.tech-card-body { padding: 25px; }
+
+.body-top { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.85rem; }
+.category-label { color: var(--med-secondary); font-weight: 700; text-transform: uppercase; }
+.rating-glass { background: #fffbeb; color: #b45309; padding: 2px 8px; border-radius: 4px; }
+
+.tech-card h3 { margin: 0 0 5px; color: var(--med-card); font-size: 1.25rem; }
+.subtitle { color: var(--med-text-muted); font-size: 0.9rem; margin-bottom: 15px; }
+
+.meta-info { display: flex; gap: 15px; font-size: 0.85rem; color: #6b7280; margin-bottom: 15px; }
+
+.divider-neon { height: 1px; background: linear-gradient(90deg, transparent, #e5e7eb, transparent); margin-bottom: 15px; }
+
+.tech-features { list-style: none; padding: 0; margin-bottom: 20px; }
+.tech-features li {
+  font-size: 0.9rem;
+  color: #374151;
+  margin-bottom: 6px;
+  padding-left: 20px;
+  position: relative;
+}
+.tech-features li::before {
+  content: '✓';
+  position: absolute; left: 0; color: var(--med-accent); font-weight: bold;
+}
+
+.tech-pricing { display: flex; justify-content: space-between; align-items: flex-end; }
+.old-p { font-size: 0.85rem; text-decoration: line-through; color: #9ca3af; }
+.new-p { font-size: 1.4rem; font-weight: 800; color: var(--med-card); }
+.seats-alert { font-size: 0.7rem; color: #ef4444; display: block; font-weight: 600; }
+
+.tech-btn {
+  background: var(--med-bg);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.tech-btn:hover { background: var(--med-accent); }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; text-align: center; }
+  .hero-visual-area { display: none; }
+  .hero-text-area h1 { font-size: 2.5rem; }
+  .hero-btns { justify-content: center; }
+  .trust-badges { justify-content: center; }
+  .controls-header { flex-direction: column; }
+  .search-glass { max-width: 100%; }
+}
