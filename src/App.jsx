@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
+import Home from "./Pages/Home";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
 import OnlineClasses from "./Pages/OnlineClasses";
 import Study from "./Pages/Study"; 
 import Mock from "./Pages/Mock";
