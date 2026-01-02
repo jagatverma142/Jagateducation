@@ -1,0 +1,155 @@
+/* Color Variables based on your image */
+:root {
+  --primary-orange: #e67e22; /* Matches the 'Login/Register' button */
+  --primary-orange-hover: #d35400;
+  --dark-bg: #333333; /* Matches the hero section background */
+  --text-dark: #2c3e50;
+  --text-light: #ffffff;
+}
+
+/* Page Container - Uses the dark theme from your hero section */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-bg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+/* The White Card */
+.auth-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Logo Styling */
+.brand-logo {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.brand-highlight {
+  color: var(--primary-orange);
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* Toggle Tabs */
+.auth-toggle {
+  display: flex;
+  background: #f1f1f1;
+  border-radius: 8px;
+  padding: 5px;
+  margin-bottom: 30px;
+}
+
+.toggle-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.toggle-btn.active {
+  background-color: white;
+  color: var(--primary-orange);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Form Inputs */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+  /* Use box-sizing to ensure padding doesn't break width */
+  box-sizing: border-box; 
+}
+
+.input-group input:focus {
+  border-color: var(--primary-orange);
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--primary-orange);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background-color: var(--primary-orange-hover);
+}
+
+/* Footer Links */
+.forgot-password {
+  text-align: right;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.forgot-password a {
+  color: #666;
+  text-decoration: none;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+  color: #666;
+}
+
+.link-text {
+  color: var(--primary-orange);
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.link-text:hover {
+  text-decoration: underline;
+}

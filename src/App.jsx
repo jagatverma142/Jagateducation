@@ -8,6 +8,7 @@ import Mock from "./Pages/Mock";
 import Gate from "./Pages/Gate";
 import JEE from "./Pages/JEE";
 import NEET from "./Pages/Neet"
+import AuthPage from "./Pages/Authpage";
 
 
 
@@ -23,6 +24,7 @@ function App() {
       <Route path="/gate-package" element={<Gate />} />
       <Route path="/jee-package" element={<JEE />} />
       <Route path="/neet-package" element={<NEET />} />
+      <Route path="/login" element={<AuthPage />} />
      </Routes>
   );
 }
