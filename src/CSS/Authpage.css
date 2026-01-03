@@ -8,7 +8,7 @@
   left: 0;
   width: 100vw;  /* Pura Viewport Width */
   height: 100vh; /* Pura Viewport Height */
-  z-index: 2000; /* Navbar aur Footer ke upar dikhane ke liye */
+  z-index: 2000;
   
   /* Centering */
   display: flex;
@@ -26,7 +26,7 @@
 .auth-card {
   background: #ffffff;
   width: 100%;
-  max-width: 420px;
+  max-width: 500px;
   padding: 40px 30px;
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);

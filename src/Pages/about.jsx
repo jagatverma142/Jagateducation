@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from '../Components/Footer'; // You need to create a Footer.jsx component
-import '../CSS/Style.css'; // Make sure these CSS files are in your src folder
+import '../App.css'; // Make sure these CSS files are in your src folder
 import '../CSS/Nav.css';
 
 

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../CSS/Authpage.css"; // CSS file import
+import "/Src/App.css";
+
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle state
