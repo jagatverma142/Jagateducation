@@ -19,7 +19,7 @@
 body {
   background-color: #f9f9f9;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Scrollbar horizontal rokne ke liye */
 }
 
 /* Header & Navbar */
@@ -129,82 +129,10 @@ header {
   .dropdown-parent:hover .dropdown {
     display: block;
   }
-}
-
-/* Mobile Menu Toggle Icon */
-.menu-toggle {
-  display: none;
-  font-size: 1.8rem;
-  color: var(--secondary);
-  cursor: pointer;
-  z-index: 1002;
-}
-
-/* -----------------------------
-   MOBILE FIX (FULL SCREEN MENU)
-   ----------------------------- */
-@media (max-width: 960px) {
+  
+  /* Hide Toggle on Desktop */
   .menu-toggle {
-    display: block;
-  }
-
-  .nav-links {
-    position: fixed; 
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 100%;
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;    
-    padding: 20px;
-    gap: 30px;
-    transform: translateX(100%); 
-    transition: transform 0.3s ease-in-out;
-    z-index: 1001; 
-  }
-
-  .nav-links.active {
-    transform: translateX(0%);
-  }
-
-  .nav-links li {
-    width: 100%;
-    text-align: center;
-  }
-  
-  .nav-links a {
-    font-size: 1.2rem;
-  }
-
-  /* Mobile Dropdown Styling */
-  .dropdown {
-    position: static; 
-    display: none; 
-    box-shadow: none;
-    background: #f8f8f8;
-    width: 80%;
-    margin: 10px auto;
-    border-radius: 5px;
-  }
-
-  .dropdown li a {
-    text-align: center;
-    font-size: 1rem;
-  }
-
-  .dropdown.show {
-    display: block;
-  }
-  
-  .btn-login {
-    display: inline-block;
-    width: auto;
-    padding: 12px 40px;
-    font-size: 1.1rem;
-    margin-top: 10px;
+    display: none;
   }
 }
 
@@ -214,74 +142,67 @@ header {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hamburger Icon (3 bars) */
-.menu-toggle {
-  display: none;
-  cursor: pointer;
-  width: 30px;
-  height: 22px;
-  position: relative;
-}
-
-.menu-toggle span {
-  position: absolute;
-  height: 3px;
-  width: 100%;
-  background: var(--secondary);
-  border-radius: 3px;
-  left: 0;
-  transition: var(--transition);
-}
-
-.menu-toggle span:nth-child(1) {
+/* =========================================
+   NEW ADDITION: BACKDROP STYLES
+   ========================================= */
+.backdrop {
+  position: fixed;
   top: 0;
-}
-.menu-toggle span:nth-child(2) {
-  top: 9px;
-}
-.menu-toggle span:nth-child(3) {
-  top: 18px;
-}
-
-/* Active state → Cross icon */
-.menu-toggle.active span:nth-child(1) {
-  transform: rotate(45deg);
-  top: 9px;
-}
-.menu-toggle.active span:nth-child(2) {
-  opacity: 0;
-}
-.menu-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg);
-  top: 9px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Black Overlay */
+  z-index: 998; /* Menu se neeche */
+  backdrop-filter: blur(2px); /* Blur Effect */
+  animation: fadeOverlay 0.3s ease-in-out;
 }
 
-/* -----------------------------
-   MOBILE VIEW
-   ----------------------------- */
+@keyframes fadeOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* =========================================
+   MOBILE MENU (SIDEBAR STYLE)
+   ========================================= */
 @media (max-width: 960px) {
+  
+  /* Hamburger Icon Styling */
   .menu-toggle {
     display: block;
-    z-index: 1002;
+    font-size: 1.8rem;
+    color: var(--secondary);
+    cursor: pointer;
+    z-index: 1002; /* Sidebar ke upar dikhna chahiye */
   }
 
+  /* Sidebar Container */
   .nav-links {
-    position: fixed;
+    position: fixed; 
     top: 0;
     right: 0;
     height: 100vh;
-    width: 100%;
+    
+    /* CHANGE: Width 100% se kam ki hai taaki backdrop dikhe */
+    width: 75%; 
+    max-width: 300px;
+    
     background: #ffffff;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1); /* Shadow added */
+    
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Top se start hoga */
     align-items: center;    
-    gap: 30px;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 1001;
+    padding-top: 80px; /* Top space taaki cross icon se collide na ho */
+    gap: 25px;
+    
+    transform: translateX(100%); 
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999; /* Backdrop (998) se upar */
   }
 
+  /* Jab Active ho */
   .nav-links.active {
     transform: translateX(0%);
   }
@@ -290,9 +211,48 @@ header {
     width: 100%;
     text-align: center;
   }
-
+  
   .nav-links a {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    display: block;
+    padding: 10px;
+  }
+
+  /* Mobile Dropdown Styling */
+  .dropdown {
+    position: static; 
+    display: block; /* Hamesha structure mein rahe */
+    box-shadow: none;
+    background: #f4f4f4;
+    width: 90%;
+    margin: 5px auto;
+    border-radius: 5px;
+    max-height: 0; /* Default hidden height */
+    overflow: hidden;
+    padding: 0;
+    transition: max-height 0.3s ease-out;
+    opacity: 1; /* Override fade animation */
+    animation: none;
+  }
+
+  /* Dropdown hover logic mobile mein hatana better rehta hai, 
+     par abhi ke liye simple rakhte hain */
+  .dropdown-parent:hover .dropdown {
+    display: block;
+    max-height: 300px; /* Expand on hover/click */
+    padding: 10px 0;
+  }
+
+  .dropdown li a {
+    text-align: center;
+    font-size: 0.95rem;
+  }
+  
+  .btn-login {
+    display: inline-block;
+    width: 80%;
+    text-align: center;
+    padding: 12px 0;
+    margin-top: 10px;
   }
 }
-/* Mobile Dropdown Styling */

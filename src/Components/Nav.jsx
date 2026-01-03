@@ -43,18 +43,24 @@ function Nav() {
           JAGAT<span>EDUCATION</span>
         </div>
 
-        {/* Navigation Links */}
+        {/* --- NEW ADDITION: BACKDROP --- */}
+        {/* Ye tabhi dikhega jab menu active hoga. Ispe click karne se menu band hoga. */}
+        {menuActive && (
+           <div className="backdrop" onClick={toggleMenu}></div>
+        )}
+
+        {/* Navigation Links (Sidebar) */}
         <ul className={`nav-links ${menuActive ? "active" : ""}`} id="navLinks">
           {navItems.map((item, index) => (
             <li key={index} style={{ "--i": index + 1 }} className={item.type === "dropdown" ? "dropdown-parent" : ""}>
               {item.type === "link" && (
-                <NavLink to={item.path} className={({ isActive }) => (isActive ? "active" : "")}>
+                <NavLink to={item.path} className={({ isActive }) => (isActive ? "active" : "")} onClick={toggleMenu}>
                   {item.name}
                 </NavLink>
               )}
 
               {item.type === "button" && (
-                <NavLink to={item.path} className="btn-login">
+                <NavLink to={item.path} className="btn-login" onClick={toggleMenu}>
                   {item.name}
                 </NavLink>
               )}
@@ -67,7 +73,7 @@ function Nav() {
                   <ul className="dropdown">
                     {item.items.map((subItem, subIndex) => (
                       <li key={subIndex}>
-                        <NavLink to={subItem.path}>{subItem.name}</NavLink>
+                        <NavLink to={subItem.path} onClick={toggleMenu}>{subItem.name}</NavLink>
                       </li>
                     ))}
                   </ul>
@@ -79,7 +85,7 @@ function Nav() {
 
         {/* Hamburger Menu */}
         <div className="menu-toggle" id="menuToggle" onClick={toggleMenu}>
-          <i className="fas fa-bars"></i>
+          <i className={menuActive ? "fas fa-times" : "fas fa-bars"}></i>
         </div>
       </nav>
     </header>
