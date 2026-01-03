@@ -1,64 +1,125 @@
-import React from 'react';
-import '../CSS/Style.css'; // Ensure your styles are imported
+import React, { useState } from 'react';
+import '../CSS/Footer.css';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
+
+// --- CONFIGURATION: EDIT YOUR CONTENT HERE ---
+const footerContent = {
+  brand: {
+    title: "JAGAT",
+    highlight: "EDUCATION",
+    desc: "India's Leading Agri GATE Institute. Empowering students with quality resources and expert guidance since 2015.",
+  },
+  socials: [
+    { icon: <FaFacebookF />, link: "#" },
+    { icon: <FaInstagram />, link: "#" },
+    { icon: <FaLinkedinIn />, link: "#" },
+    { icon: <FaYoutube />, link: "#" },
+  ],
+  linkSections: [
+    {
+      title: "Quick Links",
+      links: [
+        { label: "Home", url: "/" },
+        { label: "About Us", url: "/about" },
+        { label: "Test Packages", url: "/packages" },
+        { label: "Contact", url: "/contact" },
+      ],
+    },
+    {
+      title: "Our Programs",
+      links: [
+        { label: "Agri GATE Coaching", url: "/coaching" },
+        { label: "Test Series 2026", url: "/test-series" },
+        { label: "Free Study Material", url: "/material" },
+        { label: "Previous Year Papers", url: "/papers" },
+      ],
+    },
+  ],
+  newsletter: {
+    title: "Newsletter",
+    desc: "Subscribe to get the latest updates on exam dates.",
+    placeholder: "Enter your email",
+    buttonText: "SUBSCRIBE",
+  },
+  bottom: {
+    copyright: "Jagat Education. All Rights Reserved.",
+    links: [
+      { label: "Privacy Policy", url: "/privacy" },
+      { label: "Terms of Service", url: "/terms" },
+    ],
+  },
+};
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const currentYear = new Date().getFullYear();
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    console.log("Subscribed:", email);
+    // Add backend logic here
+    setEmail('');
+  };
+
   return (
-    <footer className="main-footer">
+    <footer className="footer-wrapper">
       <div className="footer-container">
         
-        {/* Brand Section */}
-        <div className="footer-col brand-section">
-          <h2 className="footer-logo">JAGAT<span>EDUCATION</span></h2>
-          <p>India's Leading Agri GATE Institute. Empowering students with quality resources and expert guidance since 2015.</p>
-          <div className="social-links">
-            <a href="#" aria-label="Facebook" className="social-icon"><i className="fab fa-facebook-f"></i></a>
-            <a href="#" aria-label="YouTube" className="social-icon"><i className="fab fa-youtube"></i></a>
-            <a href="#" aria-label="Instagram" className="social-icon"><i className="fab fa-instagram"></i></a>
-            <a href="#" aria-label="LinkedIn" className="social-icon"><i className="fab fa-linkedin-in"></i></a>
+        {/* 1. Brand Section */}
+        <div className="footer-col brand-col">
+          <h2 className="footer-logo">
+            {footerContent.brand.title}
+            <span>{footerContent.brand.highlight}</span>
+          </h2>
+          <p className="footer-desc">{footerContent.brand.desc}</p>
+          <div className="footer-socials">
+            {footerContent.socials.map((social, idx) => (
+              <a key={idx} href={social.link} className="social-icon">
+                {social.icon}
+              </a>
+            ))}
           </div>
         </div>
 
-        {/* Quick Links */}
-        <div className="footer-col">
-          <h3>Quick Links</h3>
-          <ul className="footer-links">
-            {/* Note: In React, we usually remove .html extensions */}
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/packages">Test Packages</a></li>
-            <li><a href="/contact">Contact</a></li>
-          </ul>
-        </div>
-
-        {/* Programs */}
-        <div className="footer-col">
-          <h3>Our Programs</h3>
-          <ul className="footer-links">
-            <li><a href="#">Agri GATE Coaching</a></li>
-            <li><a href="#">Test Series {new Date().getFullYear()}</a></li>
-            <li><a href="#">Free Study Material</a></li>
-            <li><a href="#">Previous Year Papers</a></li>
-          </ul>
-        </div>
-
-        {/* Newsletter */}
-        <div className="footer-col newsletter">
-          <h3>Newsletter</h3>
-          <p>Subscribe to get the latest updates on exam dates.</p>
-          <div className="input-group">
-            <input type="email" placeholder="Enter your email" required />
-            <button type="submit">LOGIN</button>
+        {/* 2. Dynamic Link Sections */}
+        {footerContent.linkSections.map((section, idx) => (
+          <div key={idx} className="footer-col links-col">
+            <h3>{section.title}</h3>
+            <ul>
+              {section.links.map((link, linkIdx) => (
+                <li key={linkIdx}>
+                  <a href={link.url}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
           </div>
+        ))}
+
+        {/* 3. Newsletter Section */}
+        <div className="footer-col newsletter-col">
+          <h3>{footerContent.newsletter.title}</h3>
+          <p>{footerContent.newsletter.desc}</p>
+          <form onSubmit={handleSubscribe} className="newsletter-form">
+            <input
+              type="email"
+              placeholder={footerContent.newsletter.placeholder}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <button type="submit">{footerContent.newsletter.buttonText}</button>
+          </form>
         </div>
       </div>
 
-      {/* Footer Bottom */}
+      {/* 4. Bottom Bar */}
       <div className="footer-bottom">
-        <div className="bottom-container">
-          <p>&copy; <span>{new Date().getFullYear()}</span> Jagat Education. All Rights Reserved.</p>
-          <div className="footer-legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+        <div className="bottom-content">
+          <p>&copy; {currentYear} {footerContent.bottom.copyright}</p>
+          <div className="legal-links">
+            {footerContent.bottom.links.map((link, idx) => (
+              <a key={idx} href={link.url}>{link.label}</a>
+            ))}
           </div>
         </div>
       </div>

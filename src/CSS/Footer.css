@@ -1,0 +1,185 @@
+/* Footer.css */
+:root {
+  --footer-bg: #0f0f0f;
+  --footer-text: #b3b3b3;
+  --footer-white: #ffffff;
+  --footer-accent: #3b82f6; /* Blue accent color */
+  --footer-border: #262626;
+}
+
+.footer-wrapper {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding-top: 60px;
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+  display: grid;
+  /* Responsive Grid Logic: Columns automatically resize */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+/* --- Brand Column --- */
+.footer-logo {
+  color: var(--footer-white);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.footer-logo span {
+  color: #6b7280; /* Grey highlight for 'EDUCATION' */
+}
+
+.footer-desc {
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  max-width: 300px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 12px;
+}
+
+.social-icon {
+  width: 36px;
+  height: 36px;
+  background-color: #1f1f1f;
+  color: var(--footer-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.social-icon:hover {
+  background-color: var(--footer-accent);
+  transform: translateY(-3px);
+}
+
+/* --- Links Columns --- */
+.footer-col h3 {
+  color: var(--footer-white);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+}
+
+.links-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.links-col ul li {
+  margin-bottom: 0.8rem;
+}
+
+.links-col ul li a {
+  color: var(--footer-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+  display: inline-block;
+}
+
+.links-col ul li a:hover {
+  color: var(--footer-accent);
+  transform: translateX(4px); /* Subtle slide on hover */
+}
+
+/* --- Newsletter Column --- */
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.newsletter-form input {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background-color: transparent;
+  color: var(--footer-white);
+  outline: none;
+  font-size: 0.9rem;
+  transition: border-color 0.3s;
+}
+
+.newsletter-form input:focus {
+  border-color: var(--footer-accent);
+}
+
+.newsletter-form button {
+  padding: 12px;
+  background-color: var(--footer-white);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.newsletter-form button:hover {
+  background-color: #e5e5e5;
+}
+
+/* --- Bottom Bar --- */
+.footer-bottom {
+  border-top: 1px solid var(--footer-border);
+  padding: 25px 20px;
+  background-color: #0a0a0a;
+}
+
+.bottom-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #666;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.legal-links {
+  display: flex;
+  gap: 24px;
+}
+
+.legal-links a {
+  color: var(--footer-accent);
+  text-decoration: none;
+}
+
+.legal-links a:hover {
+  text-decoration: underline;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+  .bottom-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .footer-container {
+    gap: 30px;
+  }
+}
