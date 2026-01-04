@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../CSS/About.css';
+import Footer from '../Components/Footer';
+import Navbar from '../Components/Nav';
 
 const About = () => {
   // Logic for scroll animations
@@ -22,6 +24,7 @@ const About = () => {
     };
   }, []);
 
+
   // Logic for Number Counter
   const [counts, setCounts] = useState({ years: 0, students: 0, faculty: 0, commit: 0 });
 
@@ -38,13 +41,18 @@ const About = () => {
   }, []);
 
   return (
-    <div className="about-page">
+    <>
+    <div className="nav">
+      <Navbar />
+
+    </div>
+     <div className="about-page">
       
       {/* 1. Hero Section */}
       <section className="about-hero">
         <div className="hero-overlay"></div>
         <div className="hero-content hidden">
-          <h1 className="float-text">About JAGAT</h1>
+          <h1 className="float-text">About JAGAT EDUCATIONS</h1>
           <p className="float-text delay">Empowering minds, shaping the future.</p>
         </div>
       </section>
@@ -172,6 +180,15 @@ const About = () => {
       </section>
 
     </div>
+
+
+
+    <div className="Footer">
+      <Footer />
+    </div>
+    
+    </>
+   
   );
 };
 

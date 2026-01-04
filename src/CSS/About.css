@@ -57,9 +57,11 @@
 .story-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 50px;
+  gap: 5px;
   align-items: center;
+  text-align: justify;
   padding: 80px 20px;
+  margin-right: 80px ;
 }
 .img-frame-3d {
   transform: rotateY(15deg) rotateX(5deg);
