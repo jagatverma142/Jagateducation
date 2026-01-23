@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../CSS/About.css';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Nav';
+import index from '../index.css';
 
 const About = () => {
   // Logic for scroll animations

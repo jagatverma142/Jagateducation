@@ -7,7 +7,8 @@ import Aboutsection from '../Components/Aboutsection';
 // CSS
 import "../App.css";
 import '../CSS/Nav.css';
-
+import '../CSS/Home.css';
+import index from '../index.css';
 // Icons Imports
 import expertIcon from '../Icons/icons8-expert-48.png';
 import pdfIcon from '../Icons/icons8-pdf-48.png';

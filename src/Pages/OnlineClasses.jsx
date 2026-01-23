@@ -3,6 +3,7 @@ import '../CSS/OnlineClasses.css';
 import '../CSS/Nav.css';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Nav';
+import index from '../index.css';
 
 const OnlineClasses = () => {
   const [courses, setCourses] = useState([]);

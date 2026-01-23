@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Nav'; 
 import Footer from '../Components/Footer'; 
 import '../CSS/NEET.css';
+import index from '../index.css';
 
 // --- ADVANCED NEET DATA ---
 const neetCourses = [

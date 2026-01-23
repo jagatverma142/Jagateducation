@@ -4,6 +4,7 @@ import Footer from '../Components/Footer';
 import '../CSS/Contact.css';
 import '../CSS/Nav.css';
 import '../App.css';
+import '../index.css';
 import { 
   FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaPaperPlane, 
   FaCheckCircle, FaChevronDown, FaChevronUp, FaCopy, FaExternalLinkAlt, FaExclamationCircle 

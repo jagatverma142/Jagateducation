@@ -3,6 +3,7 @@ import Navbar from '../Components/Nav';
 import Footer from '../Components/Footer';
 import '../CSS/Mock.css';
 import '../CSS/Nav.css';
+import index from '../index.css';
 import { FaClock, FaQuestionCircle, FaTrophy, FaCheckCircle, FaLock, FaPlay, FaFilter, FaSearch, FaLanguage, FaChartLine } from 'react-icons/fa';
 
 const Mock = () => {

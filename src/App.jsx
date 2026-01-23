@@ -9,6 +9,7 @@ import Gate from "./Pages/Gate";
 import JEE from "./Pages/JEE";
 import NEET from "./Pages/Neet"
 import AuthPage from "./Pages/Authpage";
+import "./index.css";
 
 
 
