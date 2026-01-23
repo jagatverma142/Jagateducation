@@ -3,7 +3,8 @@ import '../CSS/Aboutsection.css';
 
 const Aboutsection = () => {
   return (
-    <section id="about" className="about-section">
+    <div className="page-container">
+      <section id="about" className="about-section">
       <div className="about-container">
         <div className="about-row">
           
@@ -47,6 +48,7 @@ const Aboutsection = () => {
         </div>
       </div>
     </section>
+    </div>
   );
 };
 

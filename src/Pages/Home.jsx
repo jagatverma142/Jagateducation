@@ -8,7 +8,6 @@ import Aboutsection from '../Components/Aboutsection';
 import "../App.css";
 import '../CSS/Nav.css';
 import '../CSS/Home.css';
-import index from '../index.css';
 // Icons Imports
 import expertIcon from '../Icons/icons8-expert-48.png';
 import pdfIcon from '../Icons/icons8-pdf-48.png';
@@ -162,11 +161,11 @@ const Home = () => {
   const categories = ['All', 'Live', 'Recorded', 'Notes', 'Test Series'];
 
   return (
-    <div className="home-wrapper">
-      <div className="nav-container">
-        <Navbar />
-      </div>      
 
+    <div className="page-container">
+
+      
+    <div className="home-wrapper">
       {/* --- HERO SECTION --- */}
       <section className="hero-modern">
         <div className="hero-content">
@@ -311,9 +310,8 @@ const Home = () => {
         </div>
       </section>
 
-      <div className="footer">
-        <Footer />
-      </div>
+      
+    </div>
     </div>
   );
 };

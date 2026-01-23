@@ -3,7 +3,6 @@ import Footer from '../Components/Footer';
 import Navbar from '../Components/Nav';
 import '../CSS/Study.css';
 import '../CSS/Nav.css'; // Ensuring Nav styles are loaded
-import index from '../index.css';
 // Note: You may need to install react-icons: npm install react-icons
 import { FaSearch, FaFilePdf, FaVideo, FaBook, FaDownload, FaFilter, FaStar } from 'react-icons/fa';
 
@@ -150,7 +149,8 @@ const Study = () => {
 
   return (
     <>
-      <div className="nav-wrapper">
+      <div className="page-container">
+        <div className="nav-wrapper">
         <Navbar />
       </div>
 
@@ -239,6 +239,7 @@ const Study = () => {
       </div>
 
       <Footer />
+      </div>
     </>
   );
 };

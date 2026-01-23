@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Nav'; 
 import Footer from '../Components/Footer'; 
 import '../CSS/NEET.css';
-import index from '../index.css';
 
 // --- ADVANCED NEET DATA ---
 const neetCourses = [
@@ -133,7 +132,8 @@ const NEET = () => {
 
   return (
     <>
-      <Navbar />
+      <div className="page-container">
+        <Navbar />
       
       {/* 1. TOP TICKER */}
       <div className="neet-ticker">
@@ -291,6 +291,7 @@ const NEET = () => {
 
       </div>
       <Footer />
+      </div>
     </>
   );
 };

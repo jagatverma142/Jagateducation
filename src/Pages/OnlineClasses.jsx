@@ -3,7 +3,6 @@ import '../CSS/OnlineClasses.css';
 import '../CSS/Nav.css';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Nav';
-import index from '../index.css';
 
 const OnlineClasses = () => {
   const [courses, setCourses] = useState([]);
@@ -187,7 +186,9 @@ const OnlineClasses = () => {
 
   return (
     <>
-    <div className="nav">
+   <div className="page-container">
+
+     <div className="nav">
         <Navbar />
     </div>
     <div className="online-classes-page">
@@ -337,6 +338,7 @@ const OnlineClasses = () => {
       </div>
       <Footer />
     </div>
+   </div>
     </>
     
   );

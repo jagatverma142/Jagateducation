@@ -4,7 +4,6 @@ import Footer from '../Components/Footer';
 import '../CSS/Contact.css';
 import '../CSS/Nav.css';
 import '../App.css';
-import '../index.css';
 import { 
   FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaPaperPlane, 
   FaCheckCircle, FaChevronDown, FaChevronUp, FaCopy, FaExternalLinkAlt, FaExclamationCircle 
@@ -118,6 +117,8 @@ const Contact = () => {
 
   return (
     <>
+    <div className="page-container">
+
       <div className="nav-wrapper"><Navbar /></div>
 
       {/* --- TOAST NOTIFICATION --- */}
@@ -288,6 +289,13 @@ const Contact = () => {
 
       </div>
       <Footer />
+
+
+
+
+
+    </div>
+      
     </>
   );
 };

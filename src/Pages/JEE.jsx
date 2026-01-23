@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Nav'; 
 import Footer from '../Components/Footer'; 
 import '../CSS/JEE.css';
-import index from '../index.css';
 
 
 const jeeCourses = [
@@ -133,6 +132,9 @@ const JEE = () => {
 
   return (
     <>
+    <div className="page-container">
+
+
       <Navbar />
       
       {/* 1. TOP TICKER */}
@@ -291,6 +293,12 @@ const JEE = () => {
 
       </div>
       <Footer />
+
+
+
+
+    </div>
+      
     </>
   );
 };

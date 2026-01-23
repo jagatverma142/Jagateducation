@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import "../CSS/Nav.css"; // Ensure ye path sahi ho
-import index from '../index.css';
 // Data Array
 const navItems = [
   { name: "Home", path: "/", type: "link" },

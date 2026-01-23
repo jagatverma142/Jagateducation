@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import "../CSS/Authpage.css"; // CSS file import
 import "/Src/App.css";
-import "/Src/index.css";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle state
 
   return (
-    <div className="auth-container">
+
+    <div className="page-container">
+
+      <div className="auth-container">
       <div className="auth-card">
         
         {/* Logo */}
@@ -78,6 +80,15 @@ const Auth = () => {
         </p>
       </div>
     </div>
+
+
+
+
+
+    </div>
+
+
+    
   );
 };
 

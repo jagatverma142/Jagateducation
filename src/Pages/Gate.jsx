@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Nav'; 
 import Footer from '../Components/Footer'; 
 import '../CSS/Gate.css';
-import index from '../index.css';
 
 // --- ADVANCED GATE (AG) DATA ---
 const gateCourses = [
@@ -133,6 +132,11 @@ const Gate = () => {
 
   return (
     <>
+
+
+    <div className="page-container">
+
+
       <Navbar />
       
       {/* 1. TOP TICKER */}
@@ -291,6 +295,12 @@ const Gate = () => {
 
       </div>
       <Footer />
+
+
+
+
+    </div>
+      
     </>
   );
 };

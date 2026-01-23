@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../CSS/About.css';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Nav';
-import index from '../index.css';
 
 const About = () => {
   // Logic for scroll animations
@@ -43,7 +42,8 @@ const About = () => {
 
   return (
     <>
-    <div className="nav">
+    <div className="page-container">
+      <div className="nav">
       <Navbar />
 
     </div>
@@ -186,6 +186,12 @@ const About = () => {
 
     <div className="Footer">
       <Footer />
+    </div>
+    
+
+
+
+
     </div>
     
     </>

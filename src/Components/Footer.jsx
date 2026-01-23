@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../CSS/Footer.css';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
-import index from '../index.css';
 // --- CONFIGURATION: EDIT YOUR CONTENT HERE ---
 const footerContent = {
   brand: {

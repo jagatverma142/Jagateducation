@@ -3,7 +3,9 @@ import '../CSS/Aboutsec.css';
 
 const Aboutsec = () => {
   return (
-    <section className="about-2-section">
+   <div className="page-container">
+
+     <section className="about-2-section">
       <div className="about-2-container">
         
         {/* Text Side */}
@@ -73,6 +75,7 @@ const Aboutsec = () => {
 
       </div>
     </section>
+   </div>
   );
 };
 
