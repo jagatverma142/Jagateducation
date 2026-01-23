@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import "../CSS/Nav.css";
+import "../CSS/Nav.css"; // Ensure ye path sahi ho
 
-// Data moved outside component to prevent re-creation on render
+// Data Array
 const navItems = [
   { name: "Home", path: "/", type: "link" },
   { name: "About Us", path: "/about", type: "link" },
@@ -31,22 +31,18 @@ const navItems = [
 function Nav() {
   const [menuActive, setMenuActive] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // Mobile dropdown state
-  const location = useLocation(); // To detect current URL
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const location = useLocation();
 
-  // Toggle Main Menu
+  // Toggle Menu
   const toggleMenu = () => setMenuActive(!menuActive);
 
-  // Toggle Mobile Dropdowns
+  // Toggle Dropdown (Mobile)
   const toggleDropdown = (index) => {
-    if (activeDropdown === index) {
-      setActiveDropdown(null); // Close if already open
-    } else {
-      setActiveDropdown(index); // Open specific dropdown
-    }
+    setActiveDropdown(activeDropdown === index ? null : index);
   };
 
-  // Handle Scroll Effect
+  // Scroll Effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
@@ -55,16 +51,20 @@ function Nav() {
 
   // Lock Body Scroll
   useEffect(() => {
-    document.body.classList.toggle("no-scroll", menuActive);
+    document.body.style.overflow = menuActive ? "hidden" : "auto";
   }, [menuActive]);
 
-  // Close Menu on Route Change (Dynamic UX)
-  useEffect(() => {
+  // Close Menu on Link Click
+  const closeMenu = () => {
     setMenuActive(false);
     setActiveDropdown(null);
+  };
+
+  // Auto Close on Route Change
+  useEffect(() => {
+    closeMenu();
   }, [location]);
 
-  // Check if a Dropdown Parent should be active
   const isParentActive = (children) => {
     return children.some((child) => child.path === location.pathname);
   };
@@ -72,9 +72,8 @@ function Nav() {
   return (
     <header className={scrolled ? "scrolled" : ""}>
       <nav className="navbar">
-        
         {/* LOGO */}
-        <Link to="/" className="logo" onClick={() => setMenuActive(false)}>
+        <Link to="/" className="logo" onClick={closeMenu}>
           <div className="logo-symbol">J</div>
           <div className="logo-text">
             <span className="text-main">AGAT</span>
@@ -82,58 +81,51 @@ function Nav() {
           </div>
         </Link>
 
-        {/* HAMBURGER TOGGLE */}
-        <div 
-          className={`menu-toggle ${menuActive ? "active" : ""}`} 
+        {/* HAMBURGER BUTTON */}
+        <div
+          className={`menu-toggle ${menuActive ? "active" : ""}`}
           onClick={toggleMenu}
-          aria-label="Toggle navigation"
         >
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
         </div>
 
-        {/* NAVIGATION LINKS */}
+        {/* MENU LINKS */}
         <ul className={`nav-links ${menuActive ? "active" : ""}`}>
           {navItems.map((item, index) => (
-            <li 
-              key={index} 
+            <li
+              key={index}
               className={item.type === "dropdown" ? "dropdown-parent" : ""}
-              style={{ transitionDelay: `${index * 0.05}s` }}
+              // Inline style for delay is optional as CSS handles it too, but this is safe
+              style={{ transitionDelay: `${index * 0.1}s` }}
             >
-              
-              {/* --- STANDARD LINK --- */}
               {item.type === "link" && (
-                <NavLink 
-                  to={item.path} 
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                >
+                <NavLink to={item.path} className={({ isActive }) => (isActive ? "active" : "")} onClick={closeMenu}>
                   {item.name}
                 </NavLink>
               )}
 
-              {/* --- DROPDOWN (Dynamic Mobile Handling) --- */}
               {item.type === "dropdown" && (
                 <>
-                  <div 
-                    className={`dropdown-trigger ${isParentActive(item.items) ? "active" : ""}`} 
+                  <div
+                    className={`dropdown-trigger ${isParentActive(item.items) ? "active" : ""}`}
                     onClick={() => toggleDropdown(index)}
                   >
                     {item.name}
-                    {/* SVG Chevron Icon */}
-                    <svg 
-                      className={`chevron ${activeDropdown === index ? "rotate" : ""}`} 
-                      width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
+                    <svg
+                      className={`chevron ${activeDropdown === index ? "rotate" : ""}`}
+                      width="12" height="12" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" strokeWidth="3"
+                      strokeLinecap="round" strokeLinejoin="round"
                     >
                       <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                   </div>
-
-                  {/* Dropdown Menu */}
                   <ul className={`dropdown ${activeDropdown === index ? "show-mobile" : ""}`}>
                     {item.items.map((subItem, subIndex) => (
                       <li key={subIndex}>
-                        <NavLink to={subItem.path}>
+                        <NavLink to={subItem.path} onClick={closeMenu}>
                           {subItem.name}
                         </NavLink>
                       </li>
@@ -142,13 +134,11 @@ function Nav() {
                 </>
               )}
 
-              {/* --- BUTTON TYPE --- */}
               {item.type === "button" && (
-                <NavLink to={item.path} className="btn-login">
+                <NavLink to={item.path} className="btn-login" onClick={closeMenu}>
                   {item.name}
                 </NavLink>
               )}
-
             </li>
           ))}
         </ul>
