@@ -32,7 +32,7 @@ const navItems = [
 function Nav() {
   const [menuActive, setMenuActive] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); 
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
   const navRef = useRef(null);
 
@@ -43,7 +43,7 @@ function Nav() {
 
   const toggleMenu = () => {
     setMenuActive((v) => !v);
-    setActiveDropdown(null); 
+    setActiveDropdown(null);
   };
 
   const toggleDropdown = (id) => {
@@ -53,7 +53,6 @@ function Nav() {
   const isParentActive = (children) =>
     children?.some((c) => c.path === location.pathname);
 
-  // Scroll Track (Background color change ke liye)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     onScroll();
@@ -61,7 +60,6 @@ function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Body scroll lock jab mobile menu open ho
   useEffect(() => {
     document.body.style.overflow = menuActive ? "hidden" : "auto";
     return () => {
@@ -69,12 +67,10 @@ function Nav() {
     };
   }, [menuActive]);
 
-  // Page change hone par menu close
   useEffect(() => {
     closeAll();
   }, [location.pathname]);
 
-  // Outside click ya 'Escape' dabane par dropdown/menu close
   useEffect(() => {
     const onDown = (e) => {
       if (!navRef.current) return;
@@ -122,7 +118,10 @@ function Nav() {
         </button>
 
         {/* MENU LINKS */}
-        <ul id="primary-navigation" className={`nav-links ${menuActive ? "active" : ""}`}>
+        <ul
+          id="primary-navigation"
+          className={`nav-links ${menuActive ? "active" : ""}`}
+        >
           {navItems.map((item, index) => {
             const isDropdown = item.type === "dropdown";
             const dropdownOpen = isDropdown && activeDropdown === item.id;
@@ -153,7 +152,9 @@ function Nav() {
                   <>
                     <button
                       type="button"
-                      className={`dropdown-trigger ${isParentActive(item.items) ? "active" : ""}`}
+                      className={`dropdown-trigger ${
+                        isParentActive(item.items) ? "active" : ""
+                      }`}
                       onClick={() => toggleDropdown(item.id)}
                       aria-haspopup="menu"
                       aria-expanded={dropdownOpen}
@@ -175,13 +176,20 @@ function Nav() {
                       </svg>
                     </button>
 
-                    <ul className={`dropdown ${dropdownOpen ? "show-mobile" : ""}`} role="menu">
+                    <ul
+                      className={`dropdown ${
+                        dropdownOpen ? "show-mobile" : ""
+                      }`}
+                      role="menu"
+                    >
                       {item.items.map((subItem) => (
                         <li key={subItem.id} role="none">
                           <NavLink
                             to={subItem.path}
                             role="menuitem"
-                            className={({ isActive }) => (isActive ? "active" : "")}
+                            className={({ isActive }) =>
+                              isActive ? "active" : ""
+                            }
                             onClick={closeAll}
                           >
                             {subItem.name}
@@ -193,7 +201,11 @@ function Nav() {
                 )}
 
                 {item.type === "button" && (
-                  <NavLink to={item.path} className="btn-login" onClick={closeAll}>
+                  <NavLink
+                    to={item.path}
+                    className="btn-login"
+                    onClick={closeAll}
+                  >
                     {item.name}
                   </NavLink>
                 )}
