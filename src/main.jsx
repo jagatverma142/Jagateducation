@@ -3,9 +3,12 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 
+const baseName = import.meta?.env?.BASE_URL ?? "/";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter basename="/Jagateducation">
-    <App />
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter basename={baseName}>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );

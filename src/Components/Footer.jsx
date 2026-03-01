@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import '../CSS/Footer.css';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
+
 // --- CONFIGURATION: EDIT YOUR CONTENT HERE ---
 const footerContent = {
   brand: {
-    title: "JAGAT",
+    title: "AGAT",
     highlight: "EDUCATION",
     desc: "India's Leading Agri GATE Institute. Empowering students with quality resources and expert guidance since 2015.",
   },
@@ -66,10 +67,14 @@ const Footer = () => {
         
         {/* 1. Brand Section */}
         <div className="footer-col brand-col">
-          <h2 className="footer-logo">
-            {footerContent.brand.title}
-            <span>{footerContent.brand.highlight}</span>
-          </h2>
+          <div className="footer-logo">
+            {/* Hardcoded 'J' to ensure it renders correctly */}
+            <div className="footer-logo-symbol">J</div>
+            <div className="footer-logo-text">
+              <span className="text-main">{footerContent.brand.title}</span>
+              <span className="text-sub">{footerContent.brand.highlight}</span>
+            </div>
+          </div>
           <p className="footer-desc">{footerContent.brand.desc}</p>
           <div className="footer-socials">
             {footerContent.socials.map((social, idx) => (

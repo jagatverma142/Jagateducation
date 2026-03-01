@@ -1,78 +1,105 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import "../CSS/Nav.css"; // Ensure ye path sahi ho
-// Data Array
+import "../CSS/Nav.css";
+
 const navItems = [
-  { name: "Home", path: "/", type: "link" },
-  { name: "About Us", path: "/about", type: "link" },
+  { id: "home", name: "Home", path: "/", type: "link" },
+  { id: "about", name: "About Us", path: "/about", type: "link" },
   {
+    id: "features",
     name: "Features",
     type: "dropdown",
     items: [
-      { name: "Online Classes", path: "/online-classes" },
-      { name: "Study Material", path: "/study-material" },
-      { name: "Mock Tests", path: "/mock-tests" },
+      { id: "online", name: "Online Classes", path: "/online-classes" },
+      { id: "material", name: "Study Material", path: "/study-material" },
+      { id: "mock", name: "Mock Tests", path: "/mock-tests" },
     ],
   },
   {
+    id: "packages",
     name: "Test Packages",
     type: "dropdown",
     items: [
-      { name: "GATE Package", path: "/gate-package" },
-      { name: "JEE Package", path: "/jee-package" },
-      { name: "NEET Package", path: "/neet-package" },
+      { id: "gate", name: "GATE Package", path: "/gate-package" },
+      { id: "jee", name: "JEE Package", path: "/jee-package" },
+      { id: "neet", name: "NEET Package", path: "/neet-package" },
     ],
   },
-  { name: "Contact", path: "/contact", type: "link" },
-  { name: "Login/Register", path: "/login", type: "button" },
+  { id: "contact", name: "Contact", path: "/contact", type: "link" },
+  { id: "login", name: "Login/Register", path: "/login", type: "button" },
 ];
 
 function Nav() {
   const [menuActive, setMenuActive] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeDropdown, setActiveDropdown] = useState(null); 
   const location = useLocation();
+  const navRef = useRef(null);
 
-  // Toggle Menu
-  const toggleMenu = () => setMenuActive(!menuActive);
-
-  // Toggle Dropdown (Mobile)
-  const toggleDropdown = (index) => {
-    setActiveDropdown(activeDropdown === index ? null : index);
-  };
-
-  // Scroll Effect
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Lock Body Scroll
-  useEffect(() => {
-    document.body.style.overflow = menuActive ? "hidden" : "auto";
-  }, [menuActive]);
-
-  // Close Menu on Link Click
-  const closeMenu = () => {
+  const closeAll = () => {
     setMenuActive(false);
     setActiveDropdown(null);
   };
 
-  // Auto Close on Route Change
-  useEffect(() => {
-    closeMenu();
-  }, [location]);
-
-  const isParentActive = (children) => {
-    return children.some((child) => child.path === location.pathname);
+  const toggleMenu = () => {
+    setMenuActive((v) => !v);
+    setActiveDropdown(null); 
   };
+
+  const toggleDropdown = (id) => {
+    setActiveDropdown((prev) => (prev === id ? null : id));
+  };
+
+  const isParentActive = (children) =>
+    children?.some((c) => c.path === location.pathname);
+
+  // Scroll Track (Background color change ke liye)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Body scroll lock jab mobile menu open ho
+  useEffect(() => {
+    document.body.style.overflow = menuActive ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [menuActive]);
+
+  // Page change hone par menu close
+  useEffect(() => {
+    closeAll();
+  }, [location.pathname]);
+
+  // Outside click ya 'Escape' dabane par dropdown/menu close
+  useEffect(() => {
+    const onDown = (e) => {
+      if (!navRef.current) return;
+      if (!navRef.current.contains(e.target)) {
+        closeAll();
+      }
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        closeAll();
+      }
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
 
   return (
     <header className={scrolled ? "scrolled" : ""}>
-      <nav className="navbar">
+      <nav className="navbar" ref={navRef}>
         {/* LOGO */}
-        <Link to="/" className="logo" onClick={closeMenu}>
+        <Link to="/" className="logo" onClick={closeAll}>
           <div className="logo-symbol">J</div>
           <div className="logo-text">
             <span className="text-main">AGAT</span>
@@ -80,66 +107,99 @@ function Nav() {
           </div>
         </Link>
 
-        {/* HAMBURGER BUTTON */}
-        <div
+        {/* HAMBURGER (Mobile) */}
+        <button
+          type="button"
           className={`menu-toggle ${menuActive ? "active" : ""}`}
           onClick={toggleMenu}
+          aria-label="Toggle menu"
+          aria-expanded={menuActive}
+          aria-controls="primary-navigation"
         >
-          <span className="bar"></span>
-          <span className="bar"></span>
-          <span className="bar"></span>
-        </div>
+          <span className="bar" />
+          <span className="bar" />
+          <span className="bar" />
+        </button>
 
         {/* MENU LINKS */}
-        <ul className={`nav-links ${menuActive ? "active" : ""}`}>
-          {navItems.map((item, index) => (
-            <li
-              key={index}
-              className={item.type === "dropdown" ? "dropdown-parent" : ""}
-              // Inline style for delay is optional as CSS handles it too, but this is safe
-              style={{ transitionDelay: `${index * 0.1}s` }}
-            >
-              {item.type === "link" && (
-                <NavLink to={item.path} className={({ isActive }) => (isActive ? "active" : "")} onClick={closeMenu}>
-                  {item.name}
-                </NavLink>
-              )}
+        <ul id="primary-navigation" className={`nav-links ${menuActive ? "active" : ""}`}>
+          {navItems.map((item, index) => {
+            const isDropdown = item.type === "dropdown";
+            const dropdownOpen = isDropdown && activeDropdown === item.id;
 
-              {item.type === "dropdown" && (
-                <>
-                  <div
-                    className={`dropdown-trigger ${isParentActive(item.items) ? "active" : ""}`}
-                    onClick={() => toggleDropdown(index)}
+            return (
+              <li
+                key={item.id}
+                className={isDropdown ? "dropdown-parent" : ""}
+                style={{ transitionDelay: `${index * 0.05}s` }}
+                onMouseEnter={() => {
+                  if (!menuActive && isDropdown) setActiveDropdown(item.id);
+                }}
+                onMouseLeave={() => {
+                  if (!menuActive && isDropdown) setActiveDropdown(null);
+                }}
+              >
+                {item.type === "link" && (
+                  <NavLink
+                    to={item.path}
+                    className={({ isActive }) => (isActive ? "active" : "")}
+                    onClick={closeAll}
                   >
                     {item.name}
-                    <svg
-                      className={`chevron ${activeDropdown === index ? "rotate" : ""}`}
-                      width="12" height="12" viewBox="0 0 24 24"
-                      fill="none" stroke="currentColor" strokeWidth="3"
-                      strokeLinecap="round" strokeLinejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </div>
-                  <ul className={`dropdown ${activeDropdown === index ? "show-mobile" : ""}`}>
-                    {item.items.map((subItem, subIndex) => (
-                      <li key={subIndex}>
-                        <NavLink to={subItem.path} onClick={closeMenu}>
-                          {subItem.name}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
+                  </NavLink>
+                )}
 
-              {item.type === "button" && (
-                <NavLink to={item.path} className="btn-login" onClick={closeMenu}>
-                  {item.name}
-                </NavLink>
-              )}
-            </li>
-          ))}
+                {isDropdown && (
+                  <>
+                    <button
+                      type="button"
+                      className={`dropdown-trigger ${isParentActive(item.items) ? "active" : ""}`}
+                      onClick={() => toggleDropdown(item.id)}
+                      aria-haspopup="menu"
+                      aria-expanded={dropdownOpen}
+                    >
+                      {item.name}
+                      <svg
+                        className={`chevron ${dropdownOpen ? "rotate" : ""}`}
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </button>
+
+                    <ul className={`dropdown ${dropdownOpen ? "show-mobile" : ""}`} role="menu">
+                      {item.items.map((subItem) => (
+                        <li key={subItem.id} role="none">
+                          <NavLink
+                            to={subItem.path}
+                            role="menuitem"
+                            className={({ isActive }) => (isActive ? "active" : "")}
+                            onClick={closeAll}
+                          >
+                            {subItem.name}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {item.type === "button" && (
+                  <NavLink to={item.path} className="btn-login" onClick={closeAll}>
+                    {item.name}
+                  </NavLink>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </header>

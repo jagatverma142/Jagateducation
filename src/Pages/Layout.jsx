@@ -1,17 +1,18 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Nav from '../Components/Nav'; // Nav ka sahi path check kar lein
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Nav from "../Components/Nav";
+import Footer from "../Components/Footer"; // path sahi ho
 
 const Layout = () => {
   return (
-    <div>
-      {/* Navbar hamesha upar rahega */}
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Nav />
-      
-      {/* Pages yahan render honge */}
-      <main style={{ paddingTop: '80px', minHeight: '100vh' }}>
+
+      <main style={{ paddingTop: "80px", flex: 1 }}>
         <Outlet />
       </main>
+
+      <Footer />
     </div>
   );
 };
