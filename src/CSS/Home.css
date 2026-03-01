@@ -36,6 +36,12 @@ body {
   overflow-x: hidden;
 }
 
+.page-container,
+.home-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .section-padding {
   padding: 80px 20px;
   max-width: 1200px;
@@ -111,7 +117,8 @@ body {
   transform: skewX(-25deg);
 }
 .btn-primary:hover::after { animation: shine 0.75s; }
-.btn-primary:hover, .btn-secondary:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.30); }
+.btn-primary:hover,
+.btn-secondary:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.30); }
 
 /* STATS */
 .stats-bar {
@@ -236,7 +243,7 @@ body {
 
 .no-data { grid-column: 1 / -1; text-align: center; padding: 40px; color: #888; font-size: 1.1rem; }
 
-/* NEW: Roadmap */
+/* Roadmap */
 .roadmap-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -255,7 +262,7 @@ body {
 .roadmap-card h3 { color: var(--dark-color); margin-bottom: 8px; font-weight: 950; }
 .roadmap-card p { color: var(--text-muted); }
 
-/* NEW: Essentials */
+/* Essentials */
 .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
 .info-card {
   background: #fff;
@@ -270,25 +277,25 @@ body {
 .info-list { margin-left: 18px; color: var(--text-muted); }
 .info-list li { margin: 8px 0; }
 
-/* NEW: Subjects */
+/* Subjects */
 .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
 .subject-card { background: #fff; border: 1px solid #eef2f7; border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm); }
 .subject-card h3 { font-weight: 950; margin-bottom: 8px; color: var(--dark-color); }
 .subject-card p { color: var(--text-muted); }
 
-/* NEW: Weekly plan */
+/* Weekly plan */
 .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
 .plan-card { background: #fff; border: 1px solid rgba(0, 0, 0, 0.06); border-radius: 14px; padding: 18px; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow-sm); }
 .plan-day { min-width: 92px; font-weight: 950; color: #fff; background: var(--secondary); padding: 8px 10px; border-radius: 10px; text-align: center; }
 .plan-text { color: var(--text-muted); font-weight: 700; }
 
-/* NEW: Free resources */
+/* Free resources */
 .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
 .resource-card { background: #fff; border: 1px solid rgba(0, 0, 0, 0.06); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-sm); }
 .resource-card h3 { font-weight: 950; margin-bottom: 8px; color: var(--dark-color); }
 .resource-card p { color: var(--text-muted); margin-bottom: 14px; }
 
-/* NEW: Topics pills */
+/* Topics */
 .topics-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 .topic-pill { padding: 10px 14px; border-radius: 999px; background: #fff; border: 1px solid #eef2f7; color: var(--dark-color); font-weight: 900; box-shadow: var(--shadow-sm); }
 
@@ -314,12 +321,78 @@ body {
   .hero-content h1 { font-size: 2.6rem; }
   .stats-bar { width: 95%; margin-top: -30px; }
 }
+
+/* ===== Mobile Fix Patch (Final) ===== */
 @media (max-width: 768px) {
-  .section-padding { padding: 50px 18px; }
-  .hero-modern { min-height: 600px; padding: 80px 18px; background-attachment: scroll; }
-  .hero-content h1 { font-size: 2rem; }
-  .stats-bar { margin-top: 0; width: 100%; border-radius: 0; box-shadow: none; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
-  .feature-grid, .courses-grid, .testimonial-grid { grid-template-columns: 1fr; gap: 18px; }
-  .course-card-modern:hover, .feature-card-modern:hover { transform: translateY(-5px); }
+  .section-padding { padding: 50px 16px; }
+
+  /* Fix: mobile par fixed background issues */
+  .hero-modern {
+    background-attachment: scroll !important;
+    min-height: auto !important;
+    padding: 90px 16px 40px !important;
+  }
+
+  .hero-content h1 { font-size: 2rem; line-height: 1.15; }
+  .hero-content p { font-size: 1rem; }
+
+  /* Buttons: full width */
+  .hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .hero-buttons button {
+    width: 100%;
+    max-width: 320px;
+    margin: 0;
+  }
+
+  /* Stats: remove overlap */
+  .stats-bar {
+    margin-top: 0 !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 22px 12px !important;
+    gap: 12px !important;
+  }
+  .stat-item { min-width: 44%; }
+  .stat-item h2 { font-size: 1.8rem; }
+
+  /* All grids: single column */
+  .feature-grid, .courses-grid, .testimonial-grid,
+  .roadmap-grid, .info-grid, .subjects-grid, .plan-grid, .resources-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Cards should not overflow */
+  .course-card-modern { max-width: 100% !important; }
+  .card-details { padding: 18px; }
+  .card-details h3 { min-height: auto; }
+
+  /* Filter: horizontal scroll */
+  .filter-container {
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+    gap: 10px;
+  }
+  .filter-container::-webkit-scrollbar { display: none; }
+  .filter-btn { white-space: nowrap; flex: 0 0 auto; }
+
+  /* Reduce hover 3D effect on mobile */
+  .course-card-modern:hover,
+  .feature-card-modern:hover {
+    transform: translateY(-5px);
+  }
+
   .cta-inner { grid-template-columns: 1fr; }
+  .cta-strip { padding: 45px 16px; }
 }

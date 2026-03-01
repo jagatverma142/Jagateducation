@@ -1,12 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Aboutsection from "../Components/Aboutsection";
 
-// CSS
 import "../App.css";
 import "../CSS/Home.css";
 
-/* -------------------- DATA (Dynamic / Config-driven) -------------------- */
-
+/* -------------------- DATA (Same as your config) -------------------- */
 const pageConfig = {
   hero: {
     badge: "#1 Agri Engineering Institute",
@@ -42,26 +40,10 @@ const pageConfig = {
     title: "GATE Preparation Essentials",
     subtitle: "Exam-ready system: syllabus coverage, practice, tests and mentorship.",
     cards: [
-      {
-        id: "e1",
-        title: "Exam Pattern",
-        points: ["General Aptitude + Core", "MCQ/MSQ/NAT mix", "Time management matters most"],
-      },
-      {
-        id: "e2",
-        title: "Syllabus Coverage",
-        points: ["Topic-wise lectures", "Short notes + DPPs", "PYQ mapping with topics"],
-      },
-      {
-        id: "e3",
-        title: "Study Resources",
-        points: ["PDF notes", "Formula book", "Solved PYQ bank"],
-      },
-      {
-        id: "e4",
-        title: "Mentorship",
-        points: ["Personal guidance", "Doubt support", "Weekly targets & review"],
-      },
+      { id: "e1", title: "Exam Pattern", points: ["General Aptitude + Core", "MCQ/MSQ/NAT mix", "Time management matters most"] },
+      { id: "e2", title: "Syllabus Coverage", points: ["Topic-wise lectures", "Short notes + DPPs", "PYQ mapping with topics"] },
+      { id: "e3", title: "Study Resources", points: ["PDF notes", "Formula book", "Solved PYQ bank"] },
+      { id: "e4", title: "Mentorship", points: ["Personal guidance", "Doubt support", "Weekly targets & review"] },
     ],
   },
 
@@ -194,22 +176,15 @@ const pageConfig = {
   topics: {
     title: "High Weightage Topics",
     subtitle: "Focus areas that usually decide rank.",
-    pills: [
-      "Engineering Mathematics",
-      "Soil Science",
-      "Agronomy",
-      "Irrigation & Drainage",
-      "Farm Machinery",
-      "Post Harvest Engineering",
-    ],
+    pills: ["Engineering Mathematics", "Soil Science", "Agronomy", "Irrigation & Drainage", "Farm Machinery", "Post Harvest Engineering"],
   },
 
   testimonials: {
     title: "Success Stories",
     items: [
       { id: "t1", name: "Rahul Kumar", result: "GATE AIR 12", text: "The test series helped me analyze my weak points perfectly." },
-      { id: "t2", name: "Sneha Singh", result: "GATE AIR 45", text: "Live lectures were interactive and notes were concise." },
-      { id: "t3", name: "Amit Verma", result: "GATE AIR 05", text: "Best platform for Agri Engineering. Recommended." },
+      { id: "t2", name: "Sneha Singh", result: "GATE AIR 45", text: "Live lectures were interactive and the notes were concise." },
+      { id: "t3", name: "Amit Verma", result: "GATE AIR 05", text: "Best platform for Agri Engineering. Highly recommended." },
     ],
   },
 
@@ -217,8 +192,8 @@ const pageConfig = {
     title: "Frequently Asked Questions",
     items: [
       { id: "q1", question: "Can I watch the videos offline?", answer: "Yes, our mobile app allows you to download videos for offline viewing." },
-      { id: "q2", question: "Is the test series included?", answer: "Yes, the Mastercourse includes the full test series." },
-      { id: "q3", question: "What is the language?", answer: "Hinglish (Hindi + English) so concepts remain clear." },
+      { id: "q2", question: "Is the test series included?", answer: "Yes, the Mastercourse includes the full test series for free." },
+      { id: "q3", question: "What is the language?", answer: "We use Hinglish (Hindi + English mix) to ensure concepts are clear." },
     ],
   },
 
@@ -232,8 +207,7 @@ const pageConfig = {
   },
 };
 
-/* -------------------- Small Utilities / Reusable Components -------------------- */
-
+/* -------------------- Reusable Components -------------------- */
 const SectionHeader = ({ title, subtitle }) => (
   <div className="section-header">
     <h2>{title}</h2>
@@ -246,14 +220,13 @@ const Counter = ({ target, duration = 1800, isDecimal = false }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    let rafId = null;
+    let rafId = 0;
     const start = performance.now();
     const end = Number(target);
 
     const tick = (now) => {
       const progress = Math.min((now - start) / duration, 1);
-      const value = end * progress;
-      setCount(value);
+      setCount(end * progress);
       if (progress < 1) rafId = requestAnimationFrame(tick);
     };
 
@@ -267,7 +240,6 @@ const Counter = ({ target, duration = 1800, isDecimal = false }) => {
 export default function Home() {
   const [filter, setFilter] = useState("All");
   const [activeFaq, setActiveFaq] = useState(null);
-  const coursesRef = useRef(null);
 
   const categories = useMemo(() => {
     const set = new Set(pageConfig.courses.items.map((c) => c.category));
@@ -279,9 +251,16 @@ export default function Home() {
     return pageConfig.courses.items.filter((c) => c.category === filter);
   }, [filter]);
 
+  // Fixed header offset scroll (better than raw scrollIntoView) [web:6]
   const scrollToId = (id) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!el) return;
+
+    const headerOffset = 80; // aapke navbar ke approx height
+    const elementTop = el.getBoundingClientRect().top + window.pageYOffset;
+    const top = elementTop - headerOffset;
+
+    window.scrollTo({ top, behavior: "smooth" });
   };
 
   return (
@@ -328,7 +307,11 @@ export default function Home() {
         </div>
 
         {/* ROADMAP */}
-        <section id={pageConfig.roadmap.id} className="section-padding bg-light">
+        <section
+          id={pageConfig.roadmap.id}
+          className="section-padding bg-light"
+          style={{ scrollMarginTop: "90px" }} // fixed header safe [web:6][web:15]
+        >
           <SectionHeader title={pageConfig.roadmap.title} subtitle={pageConfig.roadmap.subtitle} />
           <div className="roadmap-grid">
             {pageConfig.roadmap.steps.map((s) => (
@@ -349,7 +332,7 @@ export default function Home() {
                 <h3>{box.title}</h3>
                 <ul className="info-list">
                   {box.points.map((p, i) => (
-                    <li key={i}>{p}</li>
+                    <li key={`${box.id}-${i}`}>{p}</li>
                   ))}
                 </ul>
               </div>
@@ -403,7 +386,7 @@ export default function Home() {
         <section
           id={pageConfig.courses.id}
           className="courses-section bg-light section-padding"
-          ref={coursesRef}
+          style={{ scrollMarginTop: "90px" }} // fixed header safe [web:6][web:15]
         >
           <SectionHeader title={pageConfig.courses.title} subtitle={pageConfig.courses.subtitle} />
 
