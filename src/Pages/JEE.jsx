@@ -40,11 +40,7 @@ const jeeCourses = [
     price: 28999,
     rating: 4.8,
     seatsLeft: 12,
-    features: [
-      "NCERT to Advanced Level",
-      "24/7 Doubt Engine",
-      "Board Exam Special",
-    ],
+    features: ["NCERT to Advanced Level", "24/7 Doubt Engine", "Board Exam Special"],
     badge: "Closing Soon",
     color: "#3a7bd5",
   },
@@ -62,11 +58,7 @@ const jeeCourses = [
     price: 19500,
     rating: 4.7,
     seatsLeft: 100,
-    features: [
-      "Rank Booster Strategy",
-      "15 Years PYQs Solved",
-      "Errorless Physics",
-    ],
+    features: ["Rank Booster Strategy", "15 Years PYQs Solved", "Errorless Physics"],
     badge: "Trending",
     color: "#ff416c",
   },
@@ -102,11 +94,7 @@ const jeeCourses = [
     price: 1499,
     rating: 4.6,
     seatsLeft: 999,
-    features: [
-      "Real Exam Interface",
-      "Detailed Analysis Report",
-      "Predictive Rank",
-    ],
+    features: ["Real Exam Interface", "Detailed Analysis Report", "Predictive Rank"],
     badge: "Popular",
     color: "#2ecc71",
   },
@@ -233,6 +221,7 @@ const SectionHeader = ({ title, subtitle }) => (
 
 export default function JEE() {
   const [filter, setFilter] = useState("All");
+  const [topic, setTopic] = useState("All Topics");
   const [searchTerm, setSearchTerm] = useState("");
   const [openFaq, setOpenFaq] = useState(null);
 
@@ -243,17 +232,53 @@ export default function JEE() {
     return ["All", ...Array.from(set)];
   }, []);
 
+  // Build “topic list” dynamically from config topics + subjects
+  const topicPills = useMemo(() => {
+    const set = new Set([
+      ...pageConfig.topics.pills,
+      ...pageConfig.subjects.items.map((x) => x.title),
+      ...categories.filter((x) => x !== "All"),
+    ]);
+    return ["All Topics", ...Array.from(set)];
+  }, [categories]);
+
+  // Group by category for sections
+  const categoryGroups = useMemo(() => {
+    const map = new Map();
+    jeeCourses.forEach((c) => {
+      map.set(c.category, [...(map.get(c.category) || []), c]);
+    });
+    return Array.from(map.entries());
+  }, []);
+
+  // featured top 4 by rating
+  const featured = useMemo(() => {
+    const copy = [...jeeCourses];
+    copy.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    return copy.slice(0, 4);
+  }, []);
+
   const courses = useMemo(() => {
     let temp = [...jeeCourses];
+
     if (filter !== "All") temp = temp.filter((c) => c.category === filter);
+
+    if (topic !== "All Topics") {
+      const q = topic.toLowerCase();
+      temp = temp.filter((c) =>
+        (c.title + " " + c.subtitle + " " + c.category).toLowerCase().includes(q)
+      );
+    }
+
     if (searchTerm.trim()) {
       const q = searchTerm.toLowerCase();
       temp = temp.filter((c) => (c.title + " " + c.subtitle).toLowerCase().includes(q));
     }
-    return temp;
-  }, [filter, searchTerm]);
 
-  // reveal on scroll
+    return temp;
+  }, [filter, topic, searchTerm]);
+
+  // reveal on scroll [web:34]
   useEffect(() => {
     const els = document.querySelectorAll(".hidden");
     if (!("IntersectionObserver" in window)) {
@@ -274,6 +299,18 @@ export default function JEE() {
     const headerOffset = 80;
     const top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
     window.scrollTo({ top, behavior: "smooth" });
+  };
+
+  const scrollToCategory = (cat) => {
+    const safe = String(cat).toLowerCase().replaceAll(" ", "-");
+    scrollToId(`cat-${safe}`);
+  };
+
+  const applyTopicSearch = (q) => {
+    setTopic("All Topics");
+    setFilter("All");
+    setSearchTerm(q);
+    scrollToId("packages");
   };
 
   return (
@@ -348,6 +385,26 @@ export default function JEE() {
           </div>
         </section>
 
+        {/* NEW: EXPLORE BY COURSE CATEGORY (topic-like sections) */}
+        <section className="jee-section-wrap">
+          <SectionHeader title="Explore by Course Category" subtitle="Jump directly to the section you need." />
+          <div className="topic-pills">
+            {categories.filter((c) => c !== "All").map((cat) => (
+              <button
+                type="button"
+                className="topic-pill hidden"
+                key={cat}
+                onClick={() => scrollToCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+            <button type="button" className="topic-pill hidden" onClick={() => scrollToId("packages")}>
+              All Packages
+            </button>
+          </div>
+        </section>
+
         {/* TOPPERS */}
         <section className="toppers-strip hidden">
           <h2>🏆 Our Hall of Fame</h2>
@@ -373,7 +430,7 @@ export default function JEE() {
               <div className="subject-card hidden" key={s.id}>
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
-                <button type="button" className="mini-btn" onClick={() => setSearchTerm(s.title)}>
+                <button type="button" className="mini-btn" onClick={() => applyTopicSearch(s.title)}>
                   Search packs
                 </button>
               </div>
@@ -386,8 +443,33 @@ export default function JEE() {
           <SectionHeader title={pageConfig.topics.title} subtitle={pageConfig.topics.subtitle} />
           <div className="topic-pills">
             {pageConfig.topics.pills.map((p) => (
-              <button type="button" className="topic-pill hidden" key={p} onClick={() => setSearchTerm(p)}>
+              <button type="button" className="topic-pill hidden" key={p} onClick={() => applyTopicSearch(p)}>
                 {p}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* NEW: FEATURED PICKS */}
+        <section className="jee-section-wrap">
+          <SectionHeader title="Featured Picks" subtitle="Top rated batches & modules." />
+          <div className="jee-featured-grid">
+            {featured.map((c) => (
+              <button
+                type="button"
+                className="jee-featured-card hidden"
+                key={c.id}
+                onClick={() => {
+                  setSearchTerm(c.title);
+                  scrollToId("packages");
+                }}
+              >
+                <div className="jee-featured-top">
+                  <span className="jee-ft-tag">{c.category}</span>
+                  <span className="jee-ft-rating">⭐ {c.rating}</span>
+                </div>
+                <div className="jee-ft-title">{c.title}</div>
+                <div className="jee-ft-meta">{c.language} • Starts: {c.batchStart}</div>
               </button>
             ))}
           </div>
@@ -402,6 +484,76 @@ export default function JEE() {
                 <h3>{r.title}</h3>
                 <p>{r.desc}</p>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* NEW: CATEGORY-WISE SECTIONS (AUTO) */}
+        <section className="jee-section-wrap">
+          <SectionHeader title="Browse by Sections" subtitle="Each section shows relevant packages." />
+          <div className="jee-cat-sections">
+            {categoryGroups.map(([cat, items]) => {
+              const safe = String(cat).toLowerCase().replaceAll(" ", "-");
+              return (
+                <div key={cat} id={`cat-${safe}`} className="jee-cat-block" style={{ scrollMarginTop: 90 }}>
+                  <div className="jee-cat-head hidden">
+                    <h3>{cat}</h3>
+                    <button
+                      type="button"
+                      className="mini-btn"
+                      onClick={() => {
+                        setFilter(cat);
+                        scrollToId("packages");
+                      }}
+                    >
+                      View in Packages
+                    </button>
+                  </div>
+
+                  <div className="jee-mini-grid">
+                    {items.map((course) => (
+                      <div className="jee-mini-card hidden" key={course.id}>
+                        <div className="jee-mini-left">
+                          <div className="jee-mini-title">{course.title}</div>
+                          <div className="jee-mini-sub">{course.subtitle}</div>
+                          <div className="jee-mini-meta">{course.language} • {course.batchStart}</div>
+                        </div>
+                        <div className="jee-mini-right">
+                          <div className="jee-mini-price">₹{course.price.toLocaleString()}</div>
+                          <button
+                            type="button"
+                            className="jee-mini-btn"
+                            style={{ "--accent-color": course.color }}
+                            onClick={() => scrollToId("packages")}
+                          >
+                            Explore
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* NEW: TOPIC QUICK FILTER (extra dynamic topic section) */}
+        <section className="jee-section-wrap">
+          <SectionHeader title="Quick Topic Filter" subtitle="Instant filter for the packages section." />
+          <div className="topic-pills">
+            {topicPills.map((t) => (
+              <button
+                key={t}
+                type="button"
+                className={`topic-pill hidden ${topic === t ? "active" : ""}`}
+                onClick={() => {
+                  setTopic(t);
+                  scrollToId("packages");
+                }}
+              >
+                {t}
+              </button>
             ))}
           </div>
         </section>
@@ -431,6 +583,19 @@ export default function JEE() {
                 </button>
               ))}
             </div>
+          </div>
+
+          <div className="jee-results-row hidden">
+            <div className="jee-results-text">
+              Showing <strong>{courses.length}</strong> packs
+            </div>
+            <button
+              type="button"
+              className="reset-btn"
+              onClick={() => { setFilter("All"); setTopic("All Topics"); setSearchTerm(""); }}
+            >
+              Reset
+            </button>
           </div>
 
           <div className="jee-grid">
@@ -503,7 +668,7 @@ export default function JEE() {
                 <button
                   type="button"
                   className="reset-btn"
-                  onClick={() => { setFilter("All"); setSearchTerm(""); }}
+                  onClick={() => { setFilter("All"); setTopic("All Topics"); setSearchTerm(""); }}
                 >
                   Reset
                 </button>
@@ -556,7 +721,6 @@ export default function JEE() {
         </section>
       </div>
 
-      <Footer />
     </div>
   );
 }
